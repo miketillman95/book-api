@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Book;
+use App\Models\Book;
 use App\Http\Resources\BookResource;
 
 class BookController extends Controller
