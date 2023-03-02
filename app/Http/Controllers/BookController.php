@@ -23,7 +23,8 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $book = Book::create([
-            'user_id' => $request->user()->id,
+            // causing 
+            // 'user_id' => $request->user()->id,
             'title' => $request->title,
             'description' => $request->description,
         ]);
@@ -45,9 +46,10 @@ class BookController extends Controller
     public function update(Request $request, string $id)
     {
         //check if auth user is owner of the book
-        if($request->user()->id !== $book->user_id){
-            return response()->json(['error' => 'You can only edit your own book'], 403);
-        }
+        $book = Book::findOrFail($id);
+        // if($request->user()->id !== $book->user_id){
+        //     return response()->json(['error' => 'You can only edit your own book'], 403);
+        // }
         $book->update($request->only(['title', 'description']));
 
         return new BookResource($book);
@@ -58,6 +60,7 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
+        $book = Book::findOrFail($id);
         $book->delete();
 
         return response()->json(null, 204);
