@@ -13,7 +13,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        return BookResource::collection(Book::with('ratings'->paginate(25)));
+        $books = Book::with('ratings')->paginate(25);
+        return BookResource::collection($books);
     }
 
     /**
@@ -33,7 +34,7 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Book $book)
     {
         return new BookResource($book);
     }
